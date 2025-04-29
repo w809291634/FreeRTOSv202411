@@ -8698,7 +8698,8 @@ void vTaskResetState( void )
     }
     #endif /* #if ( configGENERATE_RUN_TIME_STATS == 1 ) */
 }
-/*-----------------------------------------------------------*/
+
+/*--------------------------User Function ---------------------------------*/
 /*< Support For CmBacktrace >*/
 uint32_t * vTaskStackAddr()
 {
@@ -8717,9 +8718,14 @@ uint32_t vTaskStackSize()
     
     #endif /* ( portSTACK_GROWTH > 0 )*/
 }
- 
+
 char * vTaskName()
 {
     return pxCurrentTCB->pcTaskName;
+}
+
+uint32_t vTaskGetStackSize(TaskHandle_t TaskHandle)
+{
+    return TaskHandle->uxSizeOfStack;
 }
 /*-----------------------------------------------------------*/
