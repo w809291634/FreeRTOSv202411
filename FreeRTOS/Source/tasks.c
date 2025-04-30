@@ -409,6 +409,7 @@ typedef struct tskTaskControlBlock       /* The old naming convention is used to
 
     #if ( configGENERATE_RUN_TIME_STATS == 1 )
         configRUN_TIME_COUNTER_TYPE ulRunTimeCounter; /**< Stores the amount of time the task has spent in the Running state. */
+        float cpuUsagePercent;
     #endif
 
     #if ( configUSE_C_RUNTIME_TLS_SUPPORT == 1 )
@@ -8728,4 +8729,21 @@ uint32_t vTaskGetStackSize(TaskHandle_t TaskHandle)
 {
     return TaskHandle->uxSizeOfStack;
 }
+
+#if ( configGENERATE_RUN_TIME_STATS == 1 )
+    void vTaskResetRunTimeCounter(TaskHandle_t TaskHandle)
+    {
+        TaskHandle->ulRunTimeCounter = 0;
+    }
+    
+    float vTaskGetCpuUsagePercent(TaskHandle_t TaskHandle)
+    {
+        return TaskHandle->cpuUsagePercent;
+    }
+    
+    void vTaskSetCpuUsagePercent(TaskHandle_t TaskHandle,float CpuUsagePercent)
+    {
+        TaskHandle->cpuUsagePercent = CpuUsagePercent;
+    }
+#endif
 /*-----------------------------------------------------------*/
