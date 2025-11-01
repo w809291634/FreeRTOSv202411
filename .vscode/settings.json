@@ -88,5 +88,9 @@
 
     // git 管理
     "git.autoRepositoryDetection": true,
-    "git.repositoryScanMaxDepth": 3
+    "git.repositoryScanMaxDepth": 3,
+
+    // gbk 编码
+    "files.encoding": "gbk",
+    "files.autoGuessEncoding": true
 }
