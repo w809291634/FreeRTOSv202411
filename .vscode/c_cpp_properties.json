@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                // sys
+                "${workspaceFolder}/components/aos_hal/include",
+            ],
+            "defines": [
+                "CONFIG_APP_VERSION=\"v2.0.0\"",
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}
