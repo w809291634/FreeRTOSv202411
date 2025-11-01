@@ -3,8 +3,16 @@
         {
             "name": "Win32",
             "includePath": [
-                // sys
-                "${workspaceFolder}/components/aos_hal/include",
+                // FreeRTOS
+                "${workspaceFolder}/FreeRTOS/Source/include",
+
+                // Msp_Common_hal
+                "${workspaceFolder}/zproject/Stm32F407_FreeRTOS_Project/Msp_Common_hal/APL",
+                "${workspaceFolder}/zproject/Stm32F407_FreeRTOS_Project/Msp_Common_hal/DRV",
+
+                // SmartCar_timer_encoder
+                "${workspaceFolder}/zproject/Stm32F407_FreeRTOS_Project/DevEBox_VET6_SmartCar/HAL/SmartCar_timer_encoder/Source",
+                "${workspaceFolder}/zproject/Stm32F407_FreeRTOS_Project/DevEBox_VET6_SmartCar/HAL/SmartCar_timer_encoder/Source/board"
             ],
             "defines": [
                 "CONFIG_APP_VERSION=\"v2.0.0\"",
