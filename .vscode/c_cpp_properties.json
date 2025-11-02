@@ -16,6 +16,8 @@
             ],
             "defines": [
                 "CONFIG_APP_VERSION=\"v2.0.0\"",
+                "USE_HAL_DRIVER",
+                "STM32F407xx",
             ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c11",
