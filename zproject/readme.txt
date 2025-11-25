@@ -16,6 +16,7 @@ Stm32F103_FreeRTOS_Project\Stm32F103C8T6\HAL\Bsp_Common\APL
 Stm32F103_FreeRTOS_Project\Stm32F103C8T6\HAL\Bsp_Common\DRV         板级公用文件，通过宏配置 来进行 引脚配置，最好只包含 STM32 库的头文件
 Stm32F103_FreeRTOS_Project\Stm32F103C8T6\HAL\Template\Project\mdk
 Stm32F103_FreeRTOS_Project\Stm32F103C8T6\HAL\Template\Project\iar
+Stm32F103_FreeRTOS_Project\Stm32F103C8T6\HAL\Template_Cubemx_default\Template_Cubemx_default.ioc       Cubemx示例工程
 Stm32F103_FreeRTOS_Project\Stm32F103C8T6\STD\Bsp_Common
 Stm32F103_FreeRTOS_Project\Stm32F103C8T6\STD\Template\Project\mdk
 Stm32F103_FreeRTOS_Project\Stm32F103C8T6\STD\Template\Project\iar
