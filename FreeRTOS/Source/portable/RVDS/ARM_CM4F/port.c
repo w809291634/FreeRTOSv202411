@@ -561,9 +561,7 @@ void xPortSysTickHandler( void )
             traceISR_EXIT();
         }
     }
-#if ( configGENERATE_RUN_TIME_STATS == 1 )
-    CPU_RunTime++;
-#endif
+
     vPortClearBASEPRIFromISR();
 }
 /*-----------------------------------------------------------*/
