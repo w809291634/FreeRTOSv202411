@@ -37,6 +37,9 @@ class CompileCommandsGenerator:
             "zproject/Stm32F407_FreeRTOS_Project/Msp_Common_hal/APL",
             "zproject/Stm32F407_FreeRTOS_Project/Msp_Common_hal/DRV",
             
+            # STM32 HAL driver paths
+            "zproject/Stm32F407_FreeRTOS_Project/Msp_Common_hal/HAL/hal_lib/Drivers/STM32F4xx_HAL_Driver/Inc",
+            
             # lvgl library header paths
             "zproject/Stm32F407_FreeRTOS_Project/Msp_Common_hal/PKG/lvgl_v9.4",
             "zproject/Stm32F407_FreeRTOS_Project/Msp_Common_hal/PKG/lvgl_v9.4/src",
@@ -82,7 +85,7 @@ class CompileCommandsGenerator:
         # ==================== CONFIGURATION AREA END ====================
 
     def get_all_include_paths(self) -> List[str]:
-        """Get all header search paths including subdirectories"""
+        """Get all header search paths including subdirectories and auto-discovered header directories"""
         if self._cached_include_paths is not None:
             return self._cached_include_paths
             
@@ -106,11 +109,35 @@ class CompileCommandsGenerator:
             else:
                 print(f"Warning: Include path not found: {folder}")
         
+        # Auto-discover header file directories
+        print("Auto-discovering header file directories...")
+        header_files = self.find_header_files()
+        header_dirs = set()
+        
+        for header_file in header_files:
+            header_dir = header_file.parent
+            # Add the directory containing the header file
+            include_paths.append(str(header_dir))
+            header_dirs.add(str(header_dir))
+            
+            # Also add parent directories up to the source search folder level
+            current_dir = header_dir
+            while current_dir != self.project_root:
+                # Stop if we reach a configured source search folder
+                relative_path = current_dir.relative_to(self.project_root)
+                if any(str(relative_path).startswith(src_folder) for src_folder in self.source_search_folders):
+                    break
+                include_paths.append(str(current_dir))
+                current_dir = current_dir.parent
+        
+        print(f"Auto-discovered {len(header_dirs)} unique header file directories")
+        
         # Add project root directory
         include_paths.append(str(self.project_root))
         
         # Remove duplicates
         self._cached_include_paths = list(set(include_paths))
+        print(f"Total include paths: {len(self._cached_include_paths)}")
         return self._cached_include_paths
 
     def find_source_files(self) -> List[Path]:
@@ -138,6 +165,46 @@ class CompileCommandsGenerator:
         
         print(f"Total source files found: {len(source_files)}")
         return source_files
+
+    def find_header_files(self) -> List[Path]:
+        """Find all header files in the project"""
+        header_files = []
+        header_extensions = ['.h', '.hpp', '.hxx', '.hh']
+        
+        # Search in all configured source folders and their subdirectories
+        for search_folder in self.source_search_folders:
+            folder_path = self.project_root / search_folder
+            if folder_path.exists():
+                print(f"Scanning header files in: {search_folder}")
+                
+                # Recursively find all header files
+                for file_path in folder_path.rglob("*"):
+                    # Check if it's an excluded directory
+                    if any(pattern in str(file_path) for pattern in self.exclude_patterns):
+                        continue
+                    
+                    # Check if it's a header file
+                    if file_path.suffix.lower() in header_extensions:
+                        header_files.append(file_path)
+                        
+        # Also search in include search folders
+        for include_folder in self.include_search_folders:
+            folder_path = self.project_root / include_folder
+            if folder_path.exists():
+                print(f"Scanning header files in include folder: {include_folder}")
+                
+                # Recursively find all header files
+                for file_path in folder_path.rglob("*"):
+                    # Check if it's an excluded directory
+                    if any(pattern in str(file_path) for pattern in self.exclude_patterns):
+                        continue
+                    
+                    # Check if it's a header file
+                    if file_path.suffix.lower() in header_extensions:
+                        header_files.append(file_path)
+        
+        print(f"Total header files found: {len(header_files)}")
+        return header_files
 
     def get_compile_command(self, source_file: Path) -> Dict[str, Any]:
         """Generate compile command for a source file"""
