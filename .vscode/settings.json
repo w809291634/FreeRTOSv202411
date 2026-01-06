@@ -92,5 +92,8 @@
 
     // gbk 编码
     "files.encoding": "gbk",
-    "files.autoGuessEncoding": true
+    "files.autoGuessEncoding": true,
+
+    // 设置水平滑块宽度
+    "workbench.editor.titleScrollbarSizing": "large"
 }
