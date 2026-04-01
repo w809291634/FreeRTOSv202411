@@ -92,8 +92,23 @@
 
     // gbk 编码
     "files.encoding": "gbk",
-    "files.autoGuessEncoding": true,
+    "files.autoGuessEncoding": false,
 
     // 设置水平滑块宽度
-    "workbench.editor.titleScrollbarSizing": "large"
+    "workbench.editor.titleScrollbarSizing": "large",
+
+    // 开启显式折叠
+    "explicitFolding.debug": false,
+    "explicitFolding.rules": {
+        "c,cpp": [
+            {
+                "beginRegex": "^\\s*#\\s*if(?:n?def)?\\b",
+                "middleRegex": "^\\s*#\\s*el(?:se|if)\\b",
+                "endRegex": "^\\s*#\\s*endif\\b"
+            }
+        ]
+    },
+
+    // 开启内联提示 按下ctrl + alt 显示
+    "editor.inlayHints.enabled": "offUnlessPressed",
 }
